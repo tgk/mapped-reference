@@ -10,11 +10,11 @@ For example, it could model a subset of tables from a database of a subtree.
 
 A representation is defined by a function mapping a value of the original type to the representation type.
 
-Illustration
+[img/oneway.png]
 
 For a representation to be a proper reference, there should also exist a mapping going the other way, from mapped reference to the original type.
 
-Illustration
+[img/twoway.png]
 
 A fun example is temperature.
 If a temperature in our system is modelled as number of degrees celcius in the atom `c`, a derived representation could be the temperature in kelvin.
@@ -45,7 +45,7 @@ In this example, a help function bijective-mapping is used for easily creating r
     (swap! inc c)
     @k ;; -> -272.15
 
-Illustration
+[img/c_k.png]
 
 To avoid misunderstandings, the function swap! is reserved for atoms.
 To alter a mapped reference, the function rep-swap! is used.
@@ -72,7 +72,7 @@ Of course, more representations can be added to the same base variable, as in th
     @c ;; -> ...
     @k ;; -> ...
 
-Illustration
+[img/c_k_f.png]
 
 A representation can of course have another representation built on top of it
 
@@ -85,7 +85,7 @@ A representation can of course have another representation built on top of it
     (rep-swap! f-str (constantly "32")) ;; -> "32.0"
     @c ;;-> 0.0
 
-Illustration
+[img/f_str.png]
 
 Some representations do need the original value when being updated.
 In this example, the value for the a key in a map is being used to reference directly to a subtree structure in a map.
@@ -105,12 +105,9 @@ In this example, the value for the a key in a map is being used to reference dir
     (rep-swap! x dec)
     @m ;; -> {:x 9 :y 4}
 
-Illustration
-
 References can be combined to create advanced representations of a value in the system
 
     (def temp-map (atom {:zurich "32.0"}))
     (def zurich-as-fahrenheit (-> temp-map select-x str->float c->f))
     @zurich-as-fahrenheit ;; -> ...
     
-Illustration
