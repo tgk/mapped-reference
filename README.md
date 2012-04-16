@@ -5,6 +5,16 @@ The idea behind mapped references is to keep several representations of the same
 For example, the date 24th of December, 2012 can be expressed as the string "2012-12-24", as a Joda DateTime object or as the long 1234567890.
 In this implementation of the concept, values are modelled as atoms and representations are a new type implement the IRef protocol.
 
+Leiningen
+---------
+
+The library can be fetched via leiningen using the reference
+
+    []
+
+Examples
+--------
+
 A representations does not have to model the entire state of the original value.
 For example, it could model a subset of tables from a database of a subtree.
 
@@ -26,13 +36,13 @@ Mapping form celcius to kelvin and back is easy: just add 273.15 to go from celc
 To create a mapped reference, the function `mapping` from the library can be used.
 `mapping` takes a representation function and a reference updating function.
 The representation function has one argument, the original value, whereas the reference updating function also takes the new value in the represented form.
-In this example, a help function bijective-mapping is used for easily creating representations that do not need the original value.
+In this example, a helper function `bijective-mapping` is used for easily creating representations that do not need the original value.
 
     (defn bijective-mapping
       [f f-inv]
       (mapping
         (fn [x] (f x))
-        (fn [old y] (f-inv y))))
+        (fn [old y] (f-inv y)))) ;; 'old' is ignored as it is not needed for bijective mappings
 
     (def c->k-mapping (bijective-mapping c->k k->c))
 
@@ -47,13 +57,14 @@ In this example, a help function bijective-mapping is used for easily creating r
 
 [img/c_k.png]
 
-To avoid misunderstandings, the function swap! is reserved for atoms.
-To alter a mapped reference, the function rep-swap! is used.
+To avoid misunderstandings, the function `swap!` is reserved for atoms.
+To alter a mapped reference, the function `rep-swap!` is used.
 
     (rep-swap! inc k) ; -> 271.15
     @c ; -> 2
 
 Of course, more representations can be added to the same base variable, as in this example where the affine mapping between celcius and fahrenheit is used.
+This time, a helper function for creating representations of affine mappings is used.
 
     (defn affine-mapping
       [a b]
@@ -88,7 +99,7 @@ A representation can of course have another representation built on top of it
 [img/f_str.png]
 
 Some representations do need the original value when being updated.
-In this example, the value for the a key in a map is being used to reference directly to a subtree structure in a map.
+In this example, the value for a key in a map is being used as a reference directly into a map.
 
     (defn sub-mapping [key]
       (mapping
