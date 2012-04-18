@@ -20,11 +20,11 @@ For example, it could model a subset of tables from a database of a subtree.
 
 A representation is defined by a function mapping a value of the original type to the representation type.
 
-![One way](mapped-reference/img/oneway.png)
+![One way](img/oneway.png)
 
 For a representation to be a proper reference, there should also exist a mapping going the other way, from mapped reference to the original type.
 
-![Two way](mapped-reference/img/twoway.png)
+![Two way](img/twoway.png)
 
 A fun example is temperature.
 If a temperature in our system is modelled as number of degrees celcius in the atom `c`, a derived representation could be the temperature in kelvin.
@@ -55,7 +55,7 @@ In this example, a helper function `bijective-mapping` is used for easily creati
     (swap! inc c)
     @k ;; -> -272.15
 
-![Illustration of the reference and representation in kelvin](mapped-reference/img/c_k.png)
+![Illustration of the reference and representation in kelvin](img/c_k.png)
 
 To avoid misunderstandings, the function `swap!` is reserved for atoms.
 To alter a mapped reference, the function `rep-swap!` is used.
@@ -83,7 +83,7 @@ This time, a helper function for creating representations of affine mappings is 
     @c ;; -> ...
     @k ;; -> ...
 
-![Illustration of the reference and representation in fahrenheit](mapped-reference/img/c_k_f.png)
+![Illustration of the reference and representation in fahrenheit](img/c_k_f.png)
 
 A representation can of course have another representation built on top of it
 
@@ -96,7 +96,7 @@ A representation can of course have another representation built on top of it
     (rep-swap! f-str (constantly "32")) ;; -> "32.0"
     @c ;;-> 0.0
 
-![Illustration of string](mapped-reference/img/f_str.png)
+![Illustration of string](img/f_str.png)
 
 Some representations do need the original value when being updated.
 In this example, the value for a key in a map is being used as a reference directly into a map.
