@@ -5,13 +5,6 @@ The idea behind mapped references is to keep several representations of the same
 For example, the date 24th of December, 2012 can be expressed as the string "2012-12-24", as a Joda DateTime object or as the long 1234567890.
 In this implementation of the concept, values are modelled as atoms and representations are a new type implement the IRef protocol.
 
-Leiningen
----------
-
-The library can be fetched via leiningen using the reference
-
-    []
-
 Examples
 --------
 
